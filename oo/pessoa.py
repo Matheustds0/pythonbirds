@@ -1,2 +1,2 @@
-class Pessoa():
-    pass
+class Pessoa:
+    def cumprimentar(self):

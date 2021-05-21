@@ -95,6 +95,46 @@ Exemplo:
     >>> carro.calcular_direcao()
     'Oeste
 """
+class Carro():
+
+    def __init__(self, motor, direcao):
+        self.motor = motor
+        self.direcao = direcao
+
+    def velocidade(self):
+        return self.motor.velocidade
+    def acelerar(self):
+        self.motor.acelerar()
+    def frear(self):
+        self.motor.frear()
+    def direcao(self):
+        return self.direcao.posicao
+    def girar_a_direita(self):
+        self.direcao.girar_a_direita()
+    def girar_a_esquerda(self):
+        self.direcao.girar_a_esquerda()
+
+NORTE = 'norte'
+SUL = 'sul'
+LESTE = 'leste'
+OESTE = 'oeste'
+
+class Direcao():
+    rotacao_a_direita = {
+        NORTE:LESTE, LESTE:SUL, SUL:OESTE, OESTE:NORTE
+    }
+    rotacao_a_esquerda = {
+        NORTE:LESTE, LESTE:SUL, SUL:OESTE, OESTE:NORTE
+    }
+    def __init__(self, posicao='norte'):
+        self.posicao = posicao
+
+    def girar_a_direita(self):
+        self.posicao = self.rotacao_a_direita[self.posicao]
+
+    def girar_a_esquerda(self):
+        self.posicao = self.rotacao_a_esquerda[self.posicao]
+
 class Motor():
     def __init__(self, velocidade = 0):
         self.velocidade = velocidade
@@ -104,53 +144,7 @@ class Motor():
 
     def frear(self):
         self.velocidade -=2
-        if self.velocidade<0:
-            self.velocidade == 0
-
-class Direcao():
-    def __init__(self, posicao='norte'):
-        self.posicao = posicao
-
-    def girar_a_direita(self):
-        if self.posicao == 'norte':
-            self.posicao ='leste'
-        elif self.posicao == 'leste':
-            self.posicao = 'sul'
-        elif self.posicao == 'sul':
-            self.posicao = 'oeste'
-        elif self.posicao == 'oeste':
-            self.posicao = 'norte'
-
-    def girar_a_esquerda(self):
-        if self.posicao == 'norte':
-            self.posicao = 'oeste'
-        elif self.posicao == 'oeste':
-            self.posicao = 'sul'
-        elif self.posicao == 'sul':
-            self.posicao = 'leste'
-        elif self.posicao == 'leste':
-            self.posicao = 'norte'
-
-class Carro():
-
-    def __init__(self, motor, direcao):
-        self.motor = motor
-        self.direcao = direcao
-    def velocidade(self):
-        return self.motor.velocidade()
-    def acelerar(self):
-        self.motor.acelerar()
-    def frear(self):
-        self.motor.frear()
-    def direcao(self):
-        return self.direcao.posicao
-    def girar_a_direita(self):
-        self.girar_a_direita()
-    def girar_a_esquerda(self):
-        self.girar_a_esquerda()
-
-
-
+        self.velocidade = max(0, self.velocidade)
 
 motor = Motor()
 print(motor.velocidade)
